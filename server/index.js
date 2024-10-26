@@ -1,21 +1,22 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const userRouter = require("./routes/userRouter");
 const taskRouter = require("./routes/taskRouter");
+const cors = require('cors');
 
 const app = express();
+const corsOptions = {
+    origin: 'http://localhost:5173', // allow only this origin
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // allowed HTTP methods
+    credentials: true, // allow cookies to be sent
+  };
+  
 
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave:false,
-    saveUninitialized: true,
-    cookie: {maxAge: 24*60*60*1000}
-}));
 mongoose.connect(process.env.MONGODB_URL)
 .then(()=>{
     console.log("Database connected");
