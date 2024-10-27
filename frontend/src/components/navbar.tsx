@@ -1,6 +1,6 @@
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
-import Cookies from "js-cookie";
+import { useCookies } from "react-cookie";
 import {
   Navbar as NextUINavbar,
   NavbarBrand,
@@ -27,10 +27,10 @@ interface AddTaskButtonProps {
 
 const AddTaskButton: React.FC<AddTaskButtonProps> = ({ onOpen }) => {
   const [hasToken, setHasToken] = useState<boolean>(false);
-
+  const [cookies, setCookie, removeCookie] = useCookies(['token'])
   useEffect(() => {
-    const token = Cookies.get("token");
-    setHasToken(!token);
+    const token =  cookies.token;
+    setHasToken(!!token);
   }, []);
 
   return (

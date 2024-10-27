@@ -5,7 +5,7 @@ import { Input } from "@nextui-org/input";
 import { Link } from "@nextui-org/link";
 import { Tabs, Tab } from "@nextui-org/tabs";
 import { useState } from "react";
-
+import { useNavigate } from 'react-router-dom';
 export default function LoginPage() {
   const [selected, setSelected] = useState("login");
   const [loginEmail, setLoginEmail] = useState("");
@@ -13,6 +13,7 @@ export default function LoginPage() {
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
 
+  const history = useNavigate();
   const handleLoginSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
@@ -28,7 +29,7 @@ export default function LoginPage() {
       if (response.ok) {
         const data = await response.json();
         console.log("Login successful:", data.token);
-        // Optionally save token to local storage or state
+        history("/");
       } else {
         console.error("Login failed:", response.statusText);
       }
@@ -51,7 +52,7 @@ export default function LoginPage() {
 
       if (response.ok) {
         console.log("Signup successful!");
-        // Optionally redirect to login or show a success message
+        history("/");
       } else {
         console.error("Signup failed:", response.statusText);
       }

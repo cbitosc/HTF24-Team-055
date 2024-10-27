@@ -13,7 +13,7 @@ router.post("/register",async (req,res)=>{
         await user.save();
         const token = jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"10h"});
         res.cookie('token', token, {
-            httpOnly: true, 
+            httpOnly: false, 
             secure: process.env.NODE_ENV === 'production',
             maxAge: 3600000,
             path: '/',
@@ -33,7 +33,7 @@ router.post("/login",async (req,res)=>{
         }
         const token = jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"10h"});
         res.cookie('token', token, {
-            httpOnly: true, 
+            httpOnly: false, 
             secure: process.env.NODE_ENV === 'production',
             maxAge: 3600000,
             path: '/',
