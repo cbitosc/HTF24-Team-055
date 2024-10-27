@@ -62,7 +62,7 @@ export const Navbar = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("planned");
-  async function sendTask(){
+  async function sendTask(onClose: () => void){
     const taskData = {
       title,
       description,
@@ -86,6 +86,8 @@ export const Navbar = () => {
       } else {
         console.error('Error creating task:', response.statusText);
       }
+      onClose();
+      window.location.reload(); 
     } catch (error) {
       console.error('Error:', error);
     }
@@ -117,7 +119,7 @@ export const Navbar = () => {
           <AddTaskButton onOpen={onOpen} />
           <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <ModalContent>
-              {() => (
+              {(onClose) => (
                 <>
                   <ModalHeader className="flex flex-col gap-1">
                     Modal Title
@@ -154,7 +156,7 @@ export const Navbar = () => {
                     </form>
                   </ModalBody>
                   <ModalFooter>
-                    <Button color="primary" className="max-w" onPress={sendTask}>
+                    <Button color="primary" className="max-w" onPress={() => sendTask(onClose)}>
                       Submit
                     </Button>
                   </ModalFooter>
