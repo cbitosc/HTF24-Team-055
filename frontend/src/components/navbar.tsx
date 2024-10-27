@@ -27,7 +27,7 @@ interface AddTaskButtonProps {
 
 const AddTaskButton: React.FC<AddTaskButtonProps> = ({ onOpen }) => {
   const [hasToken, setHasToken] = useState<boolean>(false);
-  const [cookies, setCookie, removeCookie] = useCookies(['token'])
+  const [cookies] = useCookies(['token'])
   useEffect(() => {
     const token =  cookies.token;
     setHasToken(!!token);
